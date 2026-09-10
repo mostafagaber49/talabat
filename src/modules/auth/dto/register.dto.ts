@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString, IsStrongPassword, Validate } from "class-validator"
 import { MatchConfirmPassword } from "src/common/validation/matchpassword.validation"
 
-export class registerDto {
+export class RegisterDto {
 
     @IsString()
     @IsNotEmpty()
@@ -11,6 +11,7 @@ export class registerDto {
     phoneNumber! : string
 
     @IsEmail()
+    @IsNotEmpty()
     email : string 
 
     @IsStrongPassword()

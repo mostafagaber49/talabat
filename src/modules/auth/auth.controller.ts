@@ -1,16 +1,16 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { registerDto } from './dto/register.dto';
-import { verifyAccountDto } from './dto/verifyaccount.dto';
-import { resetPasswordDto } from './dto/resetpassword.dto';
-import { sendOtpDto } from './dto/sendotp.dto';
-import { loginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { VerifyAccountDto } from './dto/verifyaccount.dto';
+import { ResetPasswordDto } from './dto/resetpassword.dto';
+import { SendOtpDto } from './dto/sendotp.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 @Post('register')
-  async register(@Body() registerdto: registerDto){
+  async register(@Body() registerdto: RegisterDto){
 
    const usercreated =  await this.authService.register(registerdto)
 
@@ -24,7 +24,7 @@ export class AuthController {
 
 
   @Post('login')
-  async login(@Body() logindto: loginDto) {
+  async login(@Body() logindto: LoginDto) {
     const result = await this.authService.login(logindto);
 
     return {
@@ -35,9 +35,9 @@ export class AuthController {
   }
 
   @Post('/verifyaccount')
-  async verifyaccount(@Body() verifyaccount: verifyAccountDto){
+  async verifyaccount(@Body() verifyAccountDto: VerifyAccountDto){
 
-    const account = await this.authService.verifyaccount(verifyaccount)
+    const account = await this.authService.verifyaccount(verifyAccountDto)
 
     return {
 
@@ -48,8 +48,8 @@ export class AuthController {
   }
 
   @Patch('resetpassword')
-  async resetPassword(@Body() restepasswordDto: resetPasswordDto) {
-    const result = await this.authService.resetpassword(restepasswordDto);
+  async resetPassword(@Body() resetepasswordDto: ResetPasswordDto) {
+    const result = await this.authService.resetpassword(resetepasswordDto);
 
     return {
       success: true,
@@ -60,8 +60,8 @@ export class AuthController {
 
 
   @Post('sendotp')
-  async sendOtp(@Body() sendotpDto: sendOtpDto) {
-    const result = await this.authService.sendotp(sendotpDto);
+  async sendOtp(@Body() sendOtpDto: SendOtpDto) {
+    const result = await this.authService.sendotp(sendOtpDto);
 
     return {
       message: result.message,
