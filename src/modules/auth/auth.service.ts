@@ -43,11 +43,13 @@ html :  ` <p> your otp to verify your account ${otp} </p>`
 
 })
 
-await this.cachemanager.set(`otp ${registerdto.email}`, otp)
-await this.cachemanager.set(registerdto.email, registerdto)
+await this.cachemanager.set(`otp ${registerdto.email}`, otp, 5*60*1000)
+await this.cachemanager.set(registerdto.email, registerdto, 5*60*1000)
 
 
 // return await this.customerrepository.create(registerdto)
+
+return {message: 'otp send, please verify your account'}
 
 }
 
@@ -56,15 +58,15 @@ async login(logindto : LoginDto){
 
 const userexist = await this.customerrepository.getOne({email: logindto.email})
 
-if (!userexist) throw new NotFoundException('user not found')
+if (!userexist) throw new NotFoundException('invalid email or password')
 
     const isPasswordValid = await this.bcrybtservice.compare(logindto.password, userexist.password);
     if (!isPasswordValid) {
     throw new UnauthorizedException('invalid email or password');
   }
   
- const accesstoken = await this.jwtservice.sign({sub: userexist._id},{ expiresIn: '15m' })
- const refreshtoken = await this.jwtservice.sign({sub : userexist._id},{ expiresIn: '7d' })
+ const accesstoken =  this.jwtservice.sign({sub: userexist._id, type: 'access'},{ expiresIn: '15m' })
+ const refreshtoken =  this.jwtservice.sign({sub : userexist._id, type: 'refresh'},{ expiresIn: '7d' })
 
  return {accesstoken , refreshtoken}
 
@@ -79,7 +81,7 @@ async verifyaccount (verifyAccountDto: VerifyAccountDto){
     const otp = await this.cachemanager.get(`otp ${verifyAccountDto.email}`)
     if(!otp) {throw new BadRequestException('expire otp')}
 
-    if(otp != verifyAccountDto.otp) {
+    if(otp !== verifyAccountDto.otp) {
         throw new BadRequestException('invalid otp') }
 
     const usercreated = await this.customerrepository.create(user)
@@ -93,12 +95,12 @@ async verifyaccount (verifyAccountDto: VerifyAccountDto){
 async resetpassword(resetPasswordDto : ResetPasswordDto){
 
     const user = await this.customerrepository.getOne({email : resetPasswordDto.email})
-    if(!user) {throw new NotFoundException('user not found')}
+    if(!user) {throw new BadRequestException('invalid or expired otp')}
 
     const otp = await this.cachemanager.get(`otp ${resetPasswordDto.email}`)
     if(!otp) {throw new BadRequestException('expire otp')}
 
-    if(otp != resetPasswordDto.otp){throw new BadRequestException('invald otp')}
+    if(otp !== resetPasswordDto.otp){throw new BadRequestException('invald otp')}
 
     resetPasswordDto.newPassword = await this.bcrybtservice.hash(resetPasswordDto.newPassword)
 
@@ -136,8 +138,4 @@ async sendotp(sendOtpDto: SendOtpDto){
         return { message: 'OTP sent successfully' }
 
 }
-
-    
-
-
 }
