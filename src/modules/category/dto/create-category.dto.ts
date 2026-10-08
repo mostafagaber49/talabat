@@ -1,24 +1,23 @@
-import { IsOptional, IsString , IsNotEmpty, Min, Max, MinLength, MaxLength} from "class-validator"
+import { IsNotEmpty, IsOptional,IsString,MaxLength,MinLength} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateCategoryDto {
+  @ApiProperty({ example: 'Pizza' })
+  @IsNotEmpty()
+  @MinLength(2)
+  @MaxLength(20)
+  @IsString()
+  name!: string;
 
-@IsNotEmpty()
-@MinLength(2)
-@MaxLength(20)
-@IsString()
-name: string
+  @ApiPropertyOptional({
+    example: 'https://example.com/category.jpg',
+  })
+  @IsOptional()
+  @IsString()
+  logo?: string;
 
-
-@IsOptional()
-@IsString()
-logo: string
-
-@IsString()
-@IsOptional()
-folderId: string
-
-
-slug : string
-
-
+  @ApiPropertyOptional({ example: 'categories' })
+  @IsOptional()
+  @IsString()
+  folderId?: string;
 }

@@ -1,13 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document, Types } from "mongoose";
-import { Category } from "../category/category.schema";
-
 
 
 export type iBrand = Brand & Document
 @Schema({timestamps: true})
 export class Brand {
-
 
 @Prop({type: String , required : true, trim : true})
 name: string
@@ -19,11 +16,10 @@ slug : string
 logo : string 
 
 @Prop({type: String})
-folderId: string 
+folderId: string
 
 @Prop({type: mongoose.Schema.ObjectId, ref : 'Category'})
 categoryIds : Types.ObjectId
-
 }
 
 export const brandschema = SchemaFactory.createForClass(Brand)

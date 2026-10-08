@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductRepository } from 'src/models/product/product.repository';
 import { CategoryRepository } from 'src/models/category/category.repository';
 import { BrandRepository } from 'src/models/brand/brand.repository';
@@ -47,7 +46,7 @@ export class ProductService {
       sizes: createProductDto.sizes,
       colors: createProductDto.colors,
       brandId: new Types.ObjectId(createProductDto.brandId),
-      discription: createProductDto.discription,
+      discription: createProductDto.description,
       price: createProductDto.price,
       discount: createProductDto.discount,
       discountType: createProductDto.discountType,
@@ -58,21 +57,5 @@ export class ProductService {
 
     return await this.productRepository.create(preparedObj)
 
-  }
-
-  findAll() {
-    return `This action returns all product`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
-  }
-
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} product`;
   }
 }

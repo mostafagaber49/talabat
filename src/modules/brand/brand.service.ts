@@ -24,12 +24,7 @@ constructor(
     if(categories.length != brand.categoryIds.length ) 
       throw new NotFoundException('some categories not found')
 
-    
-
-
-
-
-
+    return await this.brandRepository.create(brand as any);
 
   }
 

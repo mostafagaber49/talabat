@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderRepository } from 'src/models/order/order.repository';
 import { ProductRepository } from 'src/models/product/product.repository';
 import { Types } from 'mongoose';
@@ -101,23 +100,6 @@ export class OrderService {
     return {createdOrder, kashierRes: await res.json()}
 
   }
-
-  findAll() {
-    return `This action returns all oreder`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} oreder`;
-  }
-
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} oreder`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} oreder`;
-  }
-
 
 
 }

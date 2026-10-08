@@ -1,8 +1,5 @@
-import { SetMetadata } from "@nestjs/common"
+import { SetMetadata } from '@nestjs/common';
 
+export const IS_PUBLIC = 'is_public';
 
-export const IS_PUBLIC = '-IS_PUBLUC'
-export const ispublic = ()=>{
-
-    return SetMetadata('is_public', true)
-}
+export const ispublic = () => SetMetadata(IS_PUBLIC, true);

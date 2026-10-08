@@ -3,7 +3,9 @@ import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { BrandFactoryService } from './brand.factory.service';
+import {ApiBearerAuth,ApiOperation,ApiResponse,ApiTags} from '@nestjs/swagger';
 
+@ApiTags('Brands')
 @Controller('brand')
 export class BrandController {
   constructor(
@@ -11,7 +13,10 @@ export class BrandController {
     private readonly brandfacoryservice : BrandFactoryService
   ) {}
 
-  @Post()
+ @Post()
+ @ApiBearerAuth('access-token')
+ @ApiOperation({ summary: 'Create brand' })
+ @ApiResponse({ status: 201, description: 'Brand created' })
  async create(@Body() createBrandDto: CreateBrandDto) {
     
      const brand = await this.brandfacoryservice.CreateBrand(createBrandDto)

@@ -1,6 +1,6 @@
 export default() => ({
 database: {
-    url : process.env.DB_URL
+    url : process.env.DB_URL || 3000
 
 },
 
@@ -39,7 +39,7 @@ s3: {
     expiresIn: parseInt(process.env.S3_EXPIRES_IN as string) || 1800,
   },
 
-COD_FEES : process.env.COD_FEES,
+COD_FEES : process.env.COD_FEES || 0,
 
 kashier: {
 

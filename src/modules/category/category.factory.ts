@@ -16,8 +16,8 @@ const newCategory = new CreateCategory()
 
 newCategory.name = createcategorydto.name.toLowerCase().trim()
 newCategory.slug = slugify(newCategory.name)
-newCategory.logo = createcategorydto.logo
-newCategory.folderId = createcategorydto.folderId
+newCategory.logo = createcategorydto.logo || ""
+newCategory.folderId = createcategorydto.folderId || ""
 
 return newCategory
 

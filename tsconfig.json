@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "types": ["multer","express","node"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
+    "types": ["multer", "express", "node", "jest"],
+    "module": "commonjs",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
@@ -25,4 +24,3 @@
     "strictPropertyInitialization": false
   }
 }
-  
